@@ -1,12 +1,13 @@
-import { Component, Input, Output } from "@angular/core";
+import { Component, Output, OnInit } from "@angular/core";
+import { ContentManagementService } from "src/app/shared/content-management.service";
 
 @Component({
   selector: "app-full-header",
   templateUrl: "./full-header.component.html",
   styleUrls: ["./full-header.component.scss"],
 })
-export class FullHeaderComponent {
-  @Input() componentToShow:
+export class FullHeaderComponent implements OnInit {
+  @Output() componentToShow:
     | "home"
     | "get-repos"
     | "guard"
@@ -14,25 +15,24 @@ export class FullHeaderComponent {
     | "signout" = "home";
 
   @Output() userSignedIn = false;
-  @Output() contentSelected: string; // exportado pelo header ou pelo pai de todos? => event emiter!
+  @Output() contentSelected: string;
 
-  @Output() onClickHome = function () {
-    this.componentToShow = "home";
-    console.log(this.componentToShow);
-  };
+  constructor(private _contentManager: ContentManagementService) {
+    this._contentManager.ScreenState.subscribe((c) => {
+      this.componentToShow = c;
+    });
+  }
 
-  @Output() onClickMyRepos = function () {
-    this.componentToShow = "get-repos";
-    console.log(this.componentToShow);
-  };
+  ngOnInit(): void {
+    console.log("INIT FULL HEADER");
+  }
 
-  @Output() onClickGuard = function () {
-    this.componentToShow = "guard";
-    console.log(this.componentToShow);
-  };
+  @Output() onClickHome = () => this._contentManager.ScreenState.next("home");
 
-  @Output() onClickLogin = function () {
-    this.componentToShow = "login";
-    console.log(this.componentToShow);
-  };
+  @Output() onClickMyRepos = () =>
+    this._contentManager.ScreenState.next("get-repos");
+
+  @Output() onClickGuard = () => this._contentManager.ScreenState.next("guard");
+
+  @Output() onClickLogin = () => this._contentManager.ScreenState.next("login");
 }
