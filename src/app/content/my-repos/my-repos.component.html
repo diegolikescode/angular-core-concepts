@@ -1,1 +1,4 @@
 <p>my-repos works!</p>
+<ul>
+  <li *ngFor="let rep of myRepos"><a href={{rep.html_url}} target="_blank">{{rep.full_name}}</a></li>
+</ul>

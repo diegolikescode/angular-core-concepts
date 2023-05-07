@@ -5,6 +5,7 @@ import { MyReposComponent } from "./my-repos/my-repos.component";
 import { GuardSigninComponent } from "./guard-signin/guard-signin.component";
 import { LoginComponent } from "./login/login.component";
 import { ControllerComponent } from "./controller/controller.component";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { ControllerComponent } from "./controller/controller.component";
     LoginComponent,
     ControllerComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, SharedModule],
   exports: [ControllerComponent],
 })
 export class ContentModule {}
